@@ -53,26 +53,53 @@ public class StudentController {
   }
 
   @PostMapping("/registerStudent")
-  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result, Model model) {
     if (result.hasErrors()) {
       return "registerStudent";
     }
-    // studentの保存
-    Student student = studentDetail.getStudent();
-//    student.setId(UUID.randomUUID().toString()); // ID自動生成など必要ならここで設定
-    service.insertStudent(student); // ← MySQLに保存
 
-    // students_coursesの保存
-    List<StudentsCourses> coursesList = studentDetail.getStudentsCoursesList();
-    if (coursesList != null) {
-      for (StudentsCourses course : coursesList) {
-//        course.setId(UUID.randomUUID().toString());
-        course.setStudentId(student.getId()); // 学生IDを設定
-        service.insertStudentsCourses(course);
+    Student student = studentDetail.getStudent();
+
+    List<StudentsCourses> rawCoursesList = studentDetail.getStudentsCoursesList();
+    List<StudentsCourses> filteredCourses = new ArrayList<>();
+
+    if (rawCoursesList != null) {
+      for (StudentsCourses course : rawCoursesList) {
+        boolean allEmpty = (course.getCourseName() == null || course.getCourseName().trim().isEmpty()) &&
+            course.getCourseStartAt() == null &&
+            course.getCourseEndAt() == null;
+
+        boolean allFilled = (course.getCourseName() != null && !course.getCourseName().trim().isEmpty()) &&
+            course.getCourseStartAt() != null &&
+            course.getCourseEndAt() != null;
+
+        if (allFilled) {
+          filteredCourses.add(course);
+        } else if (!allEmpty) {
+          result.rejectValue("studentsCoursesList", "incompleteCourse", "受講コースの入力が不完全です。すべての項目を入力してください。");
+          model.addAttribute("studentDetail", studentDetail);
+          return "registerStudent";
+        }
       }
     }
-    System.out.println(
-        studentDetail.getStudent().getName() + "さんが新規受講生として登録されました。");
+
+    if (filteredCourses.isEmpty()) {
+      result.rejectValue("studentsCoursesList", "emptyCourse", "少なくとも1つ以上の受講コースを入力してください。");
+      model.addAttribute("studentDetail", studentDetail);
+      return "registerStudent";
+    }
+
+    // student保存
+    service.insertStudent(student);
+
+    // student.getId() が DB自動採番で入るならここでIDが入っている想定
+    for (StudentsCourses course : filteredCourses) {
+      course.setStudentId(student.getId());
+      service.insertStudentsCourses(course);
+    }
+
+    System.out.println(student.getName() + "さんが新規受講生として登録されました。");
+
     return "redirect:/studentList";
   }
 }

@@ -44,6 +44,9 @@
   </table>
 
   <h2>受講コース</h2>
+  <div th:if="${#fields.hasErrors('studentsCoursesList')}">
+    <p th:errors="*{studentsCoursesList}" style="color: red;"></p>
+  </div>
   <table>
     <tr th:each="course, iterStat : *{studentsCoursesList}">
       <td>
