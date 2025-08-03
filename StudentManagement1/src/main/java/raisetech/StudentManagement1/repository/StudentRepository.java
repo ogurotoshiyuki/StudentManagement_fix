@@ -14,7 +14,13 @@ public interface StudentRepository {
     @Select("SELECT * FROM students")                        //2025/07/10追加
     List<Student> search();
 
-    @Select("SELECT * FROM students_courses")
+//    @Select("SELECT * FROM students_courses")
+//    List<StudentsCourses> searchStudentsCourses();
+    @Select("""
+      SELECT sc.*, s.name AS student_name
+      FROM students_courses sc
+      JOIN students s ON sc.student_id = s.id
+      """)
     List<StudentsCourses> searchStudentsCourses();
 
     @Insert("INSERT INTO students (name, kana_name, nickname, email, area, age, sex, remark) " +

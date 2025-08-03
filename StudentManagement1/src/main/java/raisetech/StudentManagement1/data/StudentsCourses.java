@@ -11,6 +11,7 @@ import lombok.Setter;
 
     private Integer id;
     private Integer studentId;
+    private String studentName; // ← 追加
     private String courseName;
     private LocalDate courseStartAt;
     private LocalDate courseEndAt;

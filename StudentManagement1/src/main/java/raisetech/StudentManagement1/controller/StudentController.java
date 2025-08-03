@@ -30,28 +30,37 @@ public class StudentController {
     this.converter = converter;
   }
 
+  //メニュー
+  @GetMapping("/menu")
+  public String menu(){
+    return "menu";
+  }
+
+  // 受講生一覧表示（HTML出力）
   @GetMapping(value = "/studentList", produces = "application/json; charset=UTF-8")
-  //2025/07/10追加
-  public String getStudentList(Model model) {                      //2025/07/10追加
+  public String getStudentList(Model model) {
     List<Student> students = service.searchStudentList();
     List<StudentsCourses> studentsCourses = service.searchStudentsCoursesList();
     model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
-    return "studentList";
+    return "studentList"; // ← HTMLテンプレート名（拡張子不要）
   }
 
-  @GetMapping("/studentsCoursesList")
+  // 受講生のコース一覧表示（HTML出力）
+  @GetMapping(value = "/studentsCoursesList", produces = "application/json; charset=UTF-8")
   public String getStudentsCoursesList(Model model) {
     List<StudentsCourses> list = service.searchStudentsCoursesList();
     model.addAttribute("coursesList", list);
-    return "studentsCoursesList"; // ← HTML名（拡張子は不要）
+    return "studentsCoursesList"; // ← HTMLテンプレート名（拡張子不要）
   }
 
-  @GetMapping("/newStudent")
+  // 新規受講生登録画面の表示
+  @GetMapping(value = "/newStudent", produces = "application/json; charset=UTF-8")
   public String newStudent(Model model) {
     model.addAttribute("studentDetail", new StudentDetail());
-    return "registerStudent";
+    return "registerStudent"; // ← HTMLテンプレート名（拡張子不要）
   }
 
+  
   @PostMapping("/registerStudent")
   public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result, Model model) {
     if (result.hasErrors()) {

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>受講コース一覧</title>
+  <link th:href="@{/style.css}" rel="stylesheet">
 </head>
 <body>
 <h1>受講コース一覧</h1>
@@ -10,8 +11,9 @@
   <thead>
   <tr>
     <th>ID</th>
-    <th>学生ID</th>
     <th>講座名</th>
+    <th>学生ID</th>
+    <th>学生名</th>
     <th>開始日</th>
     <th>終了日</th>
   </tr>
@@ -19,8 +21,9 @@
   <tbody>
   <tr th:each="course : ${coursesList}">
     <td th:text="${course.id}">ID</td>
-    <td th:text="${course.studentId}">学生ID</td>
     <td th:text="${course.courseName}">講座名</td>
+    <td th:text="${course.studentId}">学生ID</td>
+    <td th:text="${course.studentName}">名前</td>
     <td th:text="${#temporals.format(course.courseStartAt, 'yyyy-MM-dd HH:mm')}">開始日</td>
     <td th:text="${#temporals.format(course.courseEndAt, 'yyyy-MM-dd HH:mm')}">終了日</td>
   </tr>
