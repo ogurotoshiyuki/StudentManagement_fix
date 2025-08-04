@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>受講生新規登録</title>
+  <title>受講生情報更新</title>
   <link th:href="@{/style.css}" rel="stylesheet">
 </head>
 <body>
-<h1>新規受講生の登録</h1>
+<h1>受講生情報の更新</h1>
 
-<form th:action="@{/registerStudent}" method="post" th:object="${studentDetail}">
+<form th:action="@{/updateStudent}" method="post" th:object="${studentDetail}">
   <h2>受講生情報</h2>
   <table>
+    <input type="hidden" th:field="*{student.id}" />
     <tr>
       <th>名前</th>
       <!-- ひらがな・カタカナ・漢字 -->
@@ -97,7 +99,7 @@
                maxlength="50" required /><br/>
 
         開始日:
-        <input type="date"
+        <input type="text"
                th:field="*{studentsCoursesList[__${iterStat.index}__].courseStartAt}"
                required /><br/>
 
@@ -105,14 +107,40 @@
         <input type="date"
                th:field="*{studentsCoursesList[__${iterStat.index}__].courseEndAt}"
                required />
-      </td>
+             </td>
     </tr>
   </table>
 
-  <div style="margin-top: 20px; text-align: center;">
-    <button type="submit">登録</button>
+<!--<h1>受講生情報の更新</h1>-->
+
+<!--<form th:action="@{/updateStudent}" th:object="${studentDetail}" method="post">-->
+<!--  <input type="hidden" th:field="*{student.id}" />-->
+<!--  名前: <input type="text" th:field="*{student.name}" />-->
+<!--  メール: <input type="email" th:field="*{student.email}" />-->
+<!--  カナ名: <input type="text" th:field="*{student.kanaName}" />-->
+<!--  ニックネーム: <input type="text" th:field="*{student.nickname}" />-->
+<!--  地域: <input type="text" th:field="*{student.area}" />-->
+<!--  年齢: <input type="number" th:field="*{student.age}" />-->
+<!--  性別: <input type="text" th:field="*{student.sex}" />-->
+<!--  備考: <textarea th:field="*{student.remark}"></textarea>-->
+
+<!--  <h3>受講コース</h3>-->
+<!--  <div th:each="course, iterStat : *{studentsCoursesList}">-->
+<!--    コース名: <input type="text" th:field="*{studentsCoursesList[__${iterStat.index}__].courseName}" /><br/>-->
+<!--    開始日: <input type="date" th:field="*{studentsCoursesList[__${iterStat.index}__].courseStartAt}" /><br/>-->
+<!--    終了日: <input type="date" th:field="*{studentsCoursesList[__${iterStat.index}__].courseEndAt}" /><br/>-->
+<!--  </div>-->
+  <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+    <!-- 更新ボタン（フォーム送信） -->
+    <button type="submit" class="btn btn-primary">更新</button>
+
+    <!-- 取り消しボタン（studentList に遷移） -->
+    <button type="button"
+            class="btn btn-secondary"
+            th:onclick="|location.href='@{/studentList}'|">
+      取消
+    </button>
   </div>
 </form>
-
 </body>
 </html>
