@@ -25,7 +25,7 @@
   <tbody>
   <tr th:each="studentDetail : ${studentList}">
     <td th:text="${studentDetail.student.id}">1</td>
-    <td th:text="${studentDetail.student.name}">山田太郎</td>
+    <td><a th:href="@{/editStudent/{id}(id=${studentDetail.student.id})}" th:text="${studentDetail.student.name}">山田太郎</a></td>
     <td th:text="${studentDetail.student.kanaName}">ヤマダタロウ</td>
     <td th:text="${studentDetail.student.nickname}">タロー</td>
     <td th:text="${studentDetail.student.email}">taro@example.com</td>
@@ -47,6 +47,9 @@
       <span th:if="${studentDetail.studentsCoursesList == null or #lists.isEmpty(studentDetail.studentsCoursesList)}">
     未受講     </span>
     </td>
+<!--    <td>-->
+<!--      <a th:href="@{/editStudent/{id}(id=${studentDetail.student.id})}">編集</a>-->
+<!--    </td>-->
   </tr>
   </tbody>
 </table>

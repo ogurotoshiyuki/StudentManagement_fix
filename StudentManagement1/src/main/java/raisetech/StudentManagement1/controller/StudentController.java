@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.StudentManagement1.controller.converter.StudentConverter;
@@ -51,6 +52,54 @@ public class StudentController {
     List<StudentsCourses> list = service.searchStudentsCoursesList();
     model.addAttribute("coursesList", list);
     return "studentsCoursesList"; // ← HTMLテンプレート名（拡張子不要）
+  }
+
+  //受講生情報更新表示
+  @GetMapping("/editStudent/{id}")
+  public String editStudent(@PathVariable("id") Long id, Model model) {
+    Student student = service.findStudentById(id);
+    List<StudentsCourses> courses = service.findCoursesByStudentId(id);
+    //デバック開始
+    for (StudentsCourses c : courses) {
+      System.out.println("コース名db: " + c.getCourseName());
+      System.out.println("開始日: " + c.getCourseStartAt());
+      System.out.println("終了日: " + c.getCourseEndAt());
+    }
+    //デバック終了
+    // 目的に合ったコンストラクタで生成
+    StudentDetail detail = new StudentDetail(student, courses);
+    model.addAttribute("studentDetail", detail);
+    //デバック開始
+    for (StudentsCourses c : courses) {
+      System.out.println("コース名web: " + c.getCourseName());
+      System.out.println("開始日: " + c.getCourseStartAt());
+      System.out.println("終了日: " + c.getCourseEndAt());
+    }
+    //デバック終了
+    return "editStudent";// ← Thymeleafテンプレート名（例: editStudent.html）
+  }
+
+  //受講生情報更新
+  @PostMapping("/updateStudent")
+  public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result, Model model) {
+    if (result.hasErrors()) {
+      return "editStudent";
+    }
+
+    service.updateStudent(studentDetail.getStudent());
+    service.deleteCoursesByStudentId(studentDetail.getStudent().getId());
+
+    List<StudentsCourses> courses = studentDetail.getStudentsCoursesList();
+    if (courses != null) {
+      for (StudentsCourses course : courses) {
+        if (course.getCourseName() != null && !course.getCourseName().isBlank()) {
+          course.setStudentId(studentDetail.getStudent().getId());
+          service.insertStudentsCourses(course);
+        }
+      }
+    }
+
+    return "redirect:/studentList";
   }
 
   // 新規受講生登録画面の表示
