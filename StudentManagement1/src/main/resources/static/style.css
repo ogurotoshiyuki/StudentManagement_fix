@@ -2,10 +2,7 @@ body {
   font-family: sans-serif;
   background-color: #f9f9f9;
   margin: 20px;
-  background-image: url("/background1.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image:url(/background1.jpg);
 }
 
 h1, h2 {
@@ -131,12 +128,14 @@ tr:hover {
   background-color: #e1f5fe;
 }
 
-.breadcrumb {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-}
 
+.breadcrumb-nav {
+  background-color: #ffefc2;   /* 明るい色で注目 */
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
 .container {
        display: flex;
        justify-content: center; /* 水平方向の中央揃え */
@@ -147,4 +146,19 @@ tr:hover {
 .banner {
        width: 1197px;
        height: 420px;
+}
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+/* リンク部分 */
+.breadcrumb-link {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s;
+}
+.breadcrumb-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
 }

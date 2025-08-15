@@ -10,6 +10,7 @@ import raisetech.StudentManagement1.data.StudentsCourses;
 import raisetech.StudentManagement1.repository.StudentRepository;
 
 @Service
+@Transactional
 public class StudentService {
   private StudentRepository repository;
 
@@ -19,7 +20,11 @@ public class StudentService {
   }
 
   public List<Student> searchStudentList() {
-    return repository.search();
+    return repository.searchActiveStudents();
+  }
+
+  public List<Student> searchDeletedStudents() {
+    return repository.searchDeletedStudents();
   }
 
   public List<StudentsCourses> searchStudentsCoursesList() {
@@ -34,7 +39,6 @@ public class StudentService {
     return repository.findCoursesByStudentId(studentId);
   }
 
-  @Transactional
   public void registerStudent(Student student) {
     repository.insertStudent(student);
   }

@@ -94,23 +94,30 @@
         コース名:
         <input type="text"
                th:field="*{studentsCoursesList[__${iterStat.index}__].courseName}"
-               maxlength="50" required /><br/>
+               maxlength="50" /><br/>
 
         開始日:
         <input type="date"
                th:field="*{studentsCoursesList[__${iterStat.index}__].courseStartAt}"
-               required /><br/>
+               /><br/>
 
         終了日:
         <input type="date"
                th:field="*{studentsCoursesList[__${iterStat.index}__].courseEndAt}"
-               required />
+               />
       </td>
     </tr>
   </table>
 
-  <div style="margin-top: 20px; text-align: center;">
+  <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+
     <button type="submit">登録</button>
+    <!-- 取り消しボタン（studentList に遷移） -->
+    <button type="button"
+            class="btn btn-secondary"
+            th:onclick="|location.href='@{/studentList}'|">
+      取消
+    </button>
   </div>
 </form>
 

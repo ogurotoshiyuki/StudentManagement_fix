@@ -18,6 +18,7 @@ import raisetech.StudentManagement1.data.Student;
 import raisetech.StudentManagement1.data.StudentsCourses;
 import raisetech.StudentManagement1.domain.StudentDetail;
 import raisetech.StudentManagement1.service.StudentService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class StudentController {
@@ -40,6 +41,7 @@ public class StudentController {
   // 受講生一覧表示（HTML出力）
   @GetMapping(value = "/studentList", produces = "application/json; charset=UTF-8")
   public String getStudentList(Model model) {
+    // isDeleted = false のみ取得
     List<Student> students = service.searchStudentList();
     List<StudentsCourses> studentsCourses = service.searchStudentsCoursesList();
     model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
@@ -54,28 +56,14 @@ public class StudentController {
     return "studentsCoursesList"; // ← HTMLテンプレート名（拡張子不要）
   }
 
-  //受講生情報更新表示
+  //受講生情報更新表示（HTML出力）
   @GetMapping("/editStudent/{id}")
   public String editStudent(@PathVariable("id") Long id, Model model) {
     Student student = service.findStudentById(id);
     List<StudentsCourses> courses = service.findCoursesByStudentId(id);
-    //デバック開始
-    for (StudentsCourses c : courses) {
-      System.out.println("コース名db: " + c.getCourseName());
-      System.out.println("開始日: " + c.getCourseStartAt());
-      System.out.println("終了日: " + c.getCourseEndAt());
-    }
-    //デバック終了
     // 目的に合ったコンストラクタで生成
     StudentDetail detail = new StudentDetail(student, courses);
     model.addAttribute("studentDetail", detail);
-    //デバック開始
-    for (StudentsCourses c : courses) {
-      System.out.println("コース名web: " + c.getCourseName());
-      System.out.println("開始日: " + c.getCourseStartAt());
-      System.out.println("終了日: " + c.getCourseEndAt());
-    }
-    //デバック終了
     return "editStudent";// ← Thymeleafテンプレート名（例: editStudent.html）
   }
 
@@ -86,7 +74,10 @@ public class StudentController {
       return "editStudent";
     }
 
+    // 学生情報更新（isDeletedも含む）
     service.updateStudent(studentDetail.getStudent());
+
+    // コース情報更新
     service.deleteCoursesByStudentId(studentDetail.getStudent().getId());
 
     List<StudentsCourses> courses = studentDetail.getStudentsCoursesList();
@@ -94,11 +85,48 @@ public class StudentController {
       for (StudentsCourses course : courses) {
         if (course.getCourseName() != null && !course.getCourseName().isBlank()) {
           course.setStudentId(studentDetail.getStudent().getId());
+          System.out.println("isDeleted=" + studentDetail.getStudent().isDeleted()); // true/false を確認
           service.insertStudentsCourses(course);
         }
       }
     }
 
+    return "redirect:/studentList";
+  }
+
+  // 削除受講生の一覧表示
+  @GetMapping("/deletedStudentList")
+  public String getDeletedStudentList(Model model) {
+    // isDeleted = true のみ取得
+    List<Student> students = service.searchDeletedStudents();
+    List<StudentsCourses> studentsCourses = service.searchStudentsCoursesList();
+    model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
+    return "deletedStudentList"; // HTMLテンプレート名
+  }
+  //受講生情報削除復帰表示（HTML出力）
+  @GetMapping("/restoreStudent/{id}")
+  public String restoretStudent(@PathVariable("id") Long id, Model model) {
+    Student student = service.findStudentById(id);
+    List<StudentsCourses> courses = service.findCoursesByStudentId(id);
+    System.out.println("student = " + student);
+    System.out.println("courses = " + courses);
+    // 目的に合ったコンストラクタで生成
+    StudentDetail detail = new StudentDetail(student, courses);
+    model.addAttribute("studentDetail", detail);
+    return "restoreStudent";// ← Thymeleafテンプレート名
+  }
+  //　論理削除復活用ＰＯＳＴ
+  @PostMapping("/restoreStudents")
+  public String restoreStudents(@RequestParam(required = false) List<Long> restoreIds) {
+    if (restoreIds != null) {
+      for (Long id : restoreIds) {
+        Student student = service.findStudentById(id);
+        if (student != null) {
+          student.setDeleted(false); // 論理削除フラグ解除
+          service.updateStudent(student);
+        }
+      }
+    }
     return "redirect:/studentList";
   }
 
@@ -156,7 +184,7 @@ public class StudentController {
       service.insertStudentsCourses(course);
     }
 
-    System.out.println(student.getName() + "さんが新規受講生として登録されました。");
+//    System.out.println(student.getName() + "さんが新規受講生として登録されました。");
 
     return "redirect:/studentList";
   }

@@ -15,8 +15,8 @@ import raisetech.StudentManagement1.data.StudentsCourses;
 @Mapper
 public interface StudentRepository {
 
-    @Select("SELECT * FROM students")                        //2025/07/10追加
-    List<Student> search();
+    @Select("SELECT * FROM students WHERE is_deleted = false")
+    List<Student> searchActiveStudents();
 
     @Select("""
       SELECT sc.*, s.name AS student_name
@@ -25,7 +25,10 @@ public interface StudentRepository {
       """)
     List<StudentsCourses> searchStudentsCourses();
 
-    @Insert("INSERT INTO students (name, kana_name, nickname, email, area, age, sex, remark,is_daleted) " +
+    @Select("SELECT * FROM students WHERE is_deleted = true")
+    List<Student> searchDeletedStudents();
+
+    @Insert("INSERT INTO students (name, kana_name, nickname, email, area, age, sex, remark,is_deleted) " +
         "VALUES (#{name}, #{kanaName}, #{nickname}, #{email}, #{area}, #{age}, #{sex}, #{remark},false)")
     @Options(useGeneratedKeys = true, keyProperty = "id")  // 追加
     void insertStudent(Student student);  // ← 追加部分
@@ -56,7 +59,8 @@ public interface StudentRepository {
           area = #{area},
           age = #{age},
           sex = #{sex},
-          remark = #{remark}
+          remark = #{remark},
+          is_deleted = #{isDeleted}
       WHERE id = #{id}
       """)
     void updateStudent(Student student);

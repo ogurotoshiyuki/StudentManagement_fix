@@ -2,8 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>受講生情報一覧</title>
   <link th:href="@{/style.css}" rel="stylesheet">
+<!--  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">-->
+<!--    <h1>受講生情報一覧</h1>-->
+  <a th:href="@{/deletedStudentList}"
+     style="display: inline-block;
+          padding: 6px 12px;
+          background-color: red;
+          color: white;
+          font-weight: bold;
+          text-decoration: none;
+          border-radius: 4px;
+          float: right;"
+     title="削除済一覧を見る">
+    🗑 削除済受講生一覧
+  </a>
+  <nav class="breadcrumb">
+    <ol class="breadcrumb">
+      <li><a href="/menu" class="breadcrumb-link">＞メニュー</a></li>
+    </ol>
+  </nav>
+  </div>
 </head>
 <body>
 <h1>受講生情報一覧</h1>
