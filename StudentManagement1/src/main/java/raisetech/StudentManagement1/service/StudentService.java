@@ -32,6 +32,7 @@ public class StudentService {
   }
 
   public Student findStudentById(Long id) {
+
     return repository.findStudentById(id);
   }
 
@@ -40,10 +41,12 @@ public class StudentService {
   }
 
   public void registerStudent(Student student) {
+
     repository.insertStudent(student);
   }
 
   public void insertStudent(Student student) {
+
     repository.insertStudent(student);
   }
 
@@ -52,7 +55,12 @@ public class StudentService {
   }
 
   public void updateStudent(Student student) {
+
     repository.updateStudent(student);
+  }
+
+  public void deleteStudentsByStudentId(Integer studentId) {
+    repository.deleteStudentsByStudentId(studentId);
   }
 
   public void deleteCoursesByStudentId(Integer studentId) {

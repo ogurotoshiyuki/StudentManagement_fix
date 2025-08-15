@@ -77,7 +77,7 @@ public class StudentController {
     // 学生情報更新（isDeletedも含む）
     service.updateStudent(studentDetail.getStudent());
 
-    // コース情報更新
+    // コース情報一度レコード削除して再登録
     service.deleteCoursesByStudentId(studentDetail.getStudent().getId());
 
     List<StudentsCourses> courses = studentDetail.getStudentsCoursesList();
@@ -185,5 +185,16 @@ public class StudentController {
     }
 
     return "redirect:/studentList";
+  }
+  // 受講生の完全削除
+  @GetMapping("/deleteStudent/{id}")
+  public String deleteStudent(@PathVariable("id") Integer id) {
+    // 関連コースを先に削除
+    service.deleteCoursesByStudentId(id);
+
+    // 本体を削除
+    service.deleteStudentsByStudentId(id);
+
+    return "redirect:/deletedStudentList";
   }
 }

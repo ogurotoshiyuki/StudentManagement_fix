@@ -110,6 +110,13 @@
              document.getElementById('studentForm').submit();|">
       削除復活
     </button>
+    <!-- 最終削除ボタン（DBから完全削除） -->
+    <button type="button" class="btn btn-danger"
+            th:onclick="|if(confirm('本当に完全に削除しますか？')){
+                         location.href='@{/deleteStudent/{id}(id=${studentDetail.student.id})}'
+                       }|">
+      最終削除
+    </button>
     <!-- 取り消しボタン（studentList に遷移） -->
     <button type="button"
             class="btn btn-secondary"
