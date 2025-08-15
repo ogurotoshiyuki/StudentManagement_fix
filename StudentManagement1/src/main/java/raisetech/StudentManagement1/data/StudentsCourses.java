@@ -1,7 +1,6 @@
 package raisetech.StudentManagement1.data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;

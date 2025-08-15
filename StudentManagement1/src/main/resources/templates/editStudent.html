@@ -60,6 +60,7 @@
 
     <tr>
       <th>年齢</th>
+      <!-- 0-120歳 -->
       <td>
         <input type="number" th:field="*{student.age}" min="0" max="120" required />
       </td>
@@ -113,14 +114,16 @@
 
   <!-- hidden フィールドを削除ボタン用に -->
   <input type="hidden" id="isDeleted" name="student.deleted" th:value="false" />
-
   <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
     <!-- 更新ボタン（フォーム送信） -->
-    <button type="submit" class="btn btn-primary">更新</button>
-    <input type="hidden" id="isDeleted" name="student.isDeleted" th:value="false" />
+    <button type="submit"
+            class="btn btn-primary">
+      更新</button>
     <!-- 削除ボタン（フォーム送信） -->
-    <button type="button" class="btn btn-danger"
-            th:onclick="|document.getElementById('isDeleted').value='true'; document.getElementById('studentForm').submit();|">
+    <button type="button"
+            class="btn btn-danger"
+            th:onclick="|document.getElementById('isDeleted').value='true';
+             document.getElementById('studentForm').submit();|">
       削除
     </button>
     <!-- 取り消しボタン（studentList に遷移） -->

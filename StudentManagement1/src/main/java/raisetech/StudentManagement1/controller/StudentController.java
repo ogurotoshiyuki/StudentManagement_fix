@@ -85,12 +85,13 @@ public class StudentController {
       for (StudentsCourses course : courses) {
         if (course.getCourseName() != null && !course.getCourseName().isBlank()) {
           course.setStudentId(studentDetail.getStudent().getId());
-          System.out.println("isDeleted=" + studentDetail.getStudent().isDeleted()); // true/false を確認
+          System.out.println("UPDATE:"+" id="+studentDetail.getStudent().getId()
+              +" name="+studentDetail.getStudent().getName()
+              +" isDeleted=" + studentDetail.getStudent().isDeleted()); // true/false を確認
           service.insertStudentsCourses(course);
         }
       }
     }
-
     return "redirect:/studentList";
   }
 
@@ -145,7 +146,6 @@ public class StudentController {
     }
 
     Student student = studentDetail.getStudent();
-
     List<StudentsCourses> rawCoursesList = studentDetail.getStudentsCoursesList();
     List<StudentsCourses> filteredCourses = new ArrayList<>();
 
@@ -183,8 +183,6 @@ public class StudentController {
       course.setStudentId(student.getId());
       service.insertStudentsCourses(course);
     }
-
-//    System.out.println(student.getName() + "さんが新規受講生として登録されました。");
 
     return "redirect:/studentList";
   }

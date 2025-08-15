@@ -63,12 +63,6 @@
       <th>性別</th>
       <td>
         <input type="text" th:field="*{student.sex}" readonly />
-<!--        <select th:field="*{student.sex}" readonly>-->
-<!--          <option value="">&#45;&#45; 選択してください &#45;&#45;</option>-->
-<!--          <option value="男性">男性</option>-->
-<!--          <option value="女性">女性</option>-->
-<!--          <option value="他">他</option>-->
-<!--        </select>-->
       </td>
     </tr>
 
@@ -110,12 +104,10 @@
   <input type="hidden" id="isDeleted" name="student.deleted" th:value="false" />
 
   <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
-    <!-- 更新ボタン（フォーム送信） -->
-<!--    <button type="submit" class="btn btn-primary">更新</button>-->
-<!--    <input type="hidden" id="isDeleted" name="student.isDeleted" th:value="false" />-->
-    <!-- 削除ボタン（フォーム送信） -->
+    <!-- 削除復活ボタン（ に遷移） -->
     <button type="button" class="btn btn-success"
-            th:onclick="|document.getElementById('isDeleted').value='false'; document.getElementById('studentForm').submit();|">
+            th:onclick="|document.getElementById('isDeleted').value='false';
+             document.getElementById('studentForm').submit();|">
       削除復活
     </button>
     <!-- 取り消しボタン（studentList に遷移） -->
