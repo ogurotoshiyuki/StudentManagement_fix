@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>基本受講コース</title>
+  <link th:href="@{/style.css}" rel="stylesheet">
+</head>
+<body>
+<nav class="breadcrumb">
+  <ol class="breadcrumb">
+    <li><a href="/menu" class="breadcrumb-link">＞メニュー</a></li>
+  </ol>
+</nav>
+
+<h1>基本受講コース</h1>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>コース名</th>
+    <th>開始日</th>
+    <th>終了日</th>
+    <th>終了済</th>
+    <th>操作</th>
+  </tr>
+  <tr th:each="course : ${coursesList}">
+    <td th:text="${course.id}"></td>
+    <td th:text="${course.courseName}"></td>
+    <td th:text="${course.defaultStartAt}"></td>
+    <td th:text="${course.defaultEndAt}"></td>
+<!--    <td>-->
+<!--      <span th:if="${course.isEnd}" style="color:green;">終了</span>-->
+    <td th:text="${course.isEnd == '1' ? '終了' : '継続中'}"></td>
+<!--    </td>-->
+    <td>
+      <a th:href="@{/editCourse/{id}(id=${course.id})}">編集</a>
+    </td>
+  </tr>
+</table>
+<a href="/newCourse">新規追加</a>
+</body>
+</html>

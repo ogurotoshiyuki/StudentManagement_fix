@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>基本受講コース編集</title>
+  <link th:href="@{/style.css}" rel="stylesheet">
+</head>
+<body>
+<h1>基本受講コース編集</h1>
+<form th:action="@{/saveCourse}" th:object="${course}" method="post">
+  <input type="hidden" th:field="*{id}" />
+
+  <table>
+    <tr>
+      <th>コース名</th>
+      <td><input th:field="*{courseName}" /></td>
+    </tr>
+    <tr>
+      <th>開始日</th>
+      <td><input type="date" th:field="*{defaultStartAt}" /></td>
+    </tr>
+    <tr>
+      <th>終了日</th>
+      <td><input type="date" th:field="*{defaultEndAt}" /></td>
+    </tr>
+    <tr>
+      <th>終了済</th>
+      <td><input type="checkbox" th:field="*{isEnd}" value="1" /></td>
+    </tr>
+  </table>
+  <button type="submit">保存</button>
+
+</form>
+</body>
+</html>
