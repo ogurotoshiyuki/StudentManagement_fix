@@ -1,0 +1,78 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>受講コース一覧</title>-->
+<!--  <link th:href="@{/style.css}" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+<!--<nav>-->
+<!--  <ol class="breadcrumb">-->
+<!--    <a href="/menu" class="link">＞メニュー</a>-->
+<!--  </ol>-->
+<!--</nav>-->
+
+<!--<h1>受講コース一覧</h1>-->
+<!--<table border="1">-->
+<!--  <thead>-->
+<!--  <tr>-->
+<!--    <th>基本コースID</th>-->
+<!--    <th>基本コース名</th>-->
+<!--    <th>コース終了済</th>-->
+<!--    <th>受講生</th>-->
+<!--    <th>コース開始日</th>-->
+<!--    <th>コース終了日</th>-->
+<!--  </tr>-->
+<!--  </thead>-->
+<!--  <tbody>-->
+<!--  <tr th:each="sc : ${coursesList}">-->
+<!--    <td th:text="${sc.id}"></td>-->
+<!--    <td th:text="${sc.courseName}"></td>-->
+<!--    <td th:text="${sc.isEnd == '1' ? '終了' : '継続中'}"></td>-->
+<!--    <td th:text="${sc.studentName}"></td>-->
+<!--    <td th:text="${#temporals.format(sc.courseStartAt, 'yyyy-MM-dd')}"></td>-->
+<!--    <td th:text="${#temporals.format(sc.courseEndAt, 'yyyy-MM-dd')}"></td>-->
+<!--  </tr>-->
+<!--  </tbody>-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>コース受講生管理</title>
+  <link th:href="@{/style.css}" rel="stylesheet">
+</head>
+<nav>
+  <ol class="breadcrumb">
+    <a href="/menu" class="link">＞メニュー</a>
+  </ol>
+</nav>
+<body>
+<h1>コース受講生管理</h1>
+<table border="1">
+  <thead>
+  <tr>
+    <th>コース名</th>
+    <th>コース開催状況</th>
+    <th>受講生ID</th>
+    <th>受講生</th>
+    <th>受講開始日</th>
+    <th>受講終了日</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="sc : ${coursesList}">
+    <td th:text="${sc.courseName}"></td>
+    <td th:text="${sc.isEnd == '1' ? '終了' : '継続中'}"></td>
+    <td th:text="${sc.id}"></td>
+    <td th:text="${sc.studentName}"></td>
+    <td th:text="${#temporals.format(sc.courseStartAt, 'yyyy-MM-dd')}"></td>
+    <td th:text="${#temporals.format(sc.courseEndAt, 'yyyy-MM-dd')}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

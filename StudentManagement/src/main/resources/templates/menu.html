@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--Thymeleafを使う宣言-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>受講生管理システム</title>
+  <link th:href="@{/style.css}" rel="stylesheet">
+</head>
+<body>
+<h1>受講生管理システム</h1>
+<form>
+<fieldset>
+  <legend>メニュー</legend>
+  <a href="/studentList">受講生情報一覧</a>
+  <a href="/newStudent">受講生情報　新規登録</a>
+  <hr>
+  <a href="/basicCourses">基本受講コース設定</a>
+  <a href="/studentsCoursesList">コース受講生管理</a>
+</fieldset>
+</form>
+</body>
+</html>

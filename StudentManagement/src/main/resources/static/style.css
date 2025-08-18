@@ -1,0 +1,201 @@
+body {
+  font-family: sans-serif;
+  background-color: #f9f9f9;
+  margin: 20px;
+  background-image:url(/background2.jpg);
+}
+
+h1, h2 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input[type="text"],
+input[type="date"] {
+  width: 60%;
+  padding: 6px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+a {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  color: #3498db;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+fieldset {
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+legend {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+label {
+  display: inline-block;
+  width: 150px;
+  margin-bottom: 10px;
+  vertical-align: top;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #333;
+}
+
+ul {
+  width: 600px;
+  margin: 0 auto 30px auto;
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  list-style: none;
+}
+
+ul li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1em;
+  color: #333;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+table {
+  width: 90%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: #ecf0f1;
+  color: #333;
+}
+
+tr:nth-child(even) {
+  background-color: #f4f8fb;
+}
+
+tr:hover {
+  background-color: #e1f5fe;
+}
+
+
+.breadcrumb-nav {
+  background-color: #ffefc2;   /* 明るい色で注目 */
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+.container {
+       display: flex;
+       justify-content: center; /* 水平方向の中央揃え */
+       align-items: center;     /* 垂直方向の中央揃え */
+       width: 1197px;
+       height: 420px;
+}
+.banner {
+       width: 1197px;
+       height: 420px;
+}
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+/* リンク部分 */
+.breadcrumb-link {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s;
+}
+.breadcrumb-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+.checked-box {
+    accent-color: green;   /* チェック時の色 */
+}
+
+.unchecked-box {
+    accent-color: red;     /* チェックなしの色 */
+}
+
+.course-table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;   /* 列幅を固定 */
+}
+
+.course-table th, .course-table td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: center;
+}
+
+.course-table th:nth-child(1),
+.course-table td:nth-child(1) {
+    width: 40%; /* コース名 */
+}
+
+.course-table th:nth-child(2),
+.course-table td:nth-child(2),
+.course-table th:nth-child(3),
+.course-table td:nth-child(3) {
+    width: 30%; /* 開始日・終了日 */
+}
+
+.course-table select,
+.course-table input[type="date"] {
+    width: 100%;
+    box-sizing: border-box; /* 枠からはみ出さないようにする */
+}

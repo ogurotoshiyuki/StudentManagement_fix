@@ -6,7 +6,7 @@
   <link th:href="@{/style.css}" rel="stylesheet">
 </head>
 <body>
-<h1>基本受講コース編集</h1>
+<h1>基本受講コース（新規）編集</h1>
 <form th:action="@{/saveCourse}" th:object="${course}" method="post">
   <input type="hidden" th:field="*{id}" />
 
@@ -28,7 +28,14 @@
       <td><input type="checkbox" th:field="*{isEnd}" value="1" /></td>
     </tr>
   </table>
+  <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
   <button type="submit">保存</button>
+  <!-- 取り消しボタン（studentList に遷移） -->
+  <button type="button"
+          class="btn btn-secondary"
+          th:onclick="|location.href='@{/basicCourses}'|">
+    取消
+  </button>
 
 </form>
 </body>

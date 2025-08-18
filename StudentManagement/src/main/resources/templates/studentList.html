@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/style.css}" rel="stylesheet">
+  <a th:href="@{/deletedStudentList}"
+     style="display: inline-block;
+          padding: 6px 12px;
+          background-color: red;
+          color: white;
+          font-weight: bold;
+          text-decoration: none;
+          border-radius: 4px;
+          float: right;"
+     title="削除済一覧を見る">
+    🗑 削除済受講生一覧
+  </a>
+  <nav class="breadcrumb">
+    <ol class="breadcrumb">
+      <li><a href="/menu" class="breadcrumb-link">＞メニュー</a></li>
+    </ol>
+  </nav>
+  </div>
+</head>
+<body>
+<h1>受講生情報一覧</h1>
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>名前</th>
+    <th>カナ名</th>
+    <th>ニックネーム</th>
+    <th>メールアドレス</th>
+    <th>地域</th>
+    <th>年齢</th>
+    <th>性別</th>
+    <th>備考</th>
+    <th>コース名</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="studentDetail : ${studentList}">
+    <td th:text="${studentDetail.student.id}">1</td>
+    <td><a th:href="@{/editStudent/{id}(id=${studentDetail.student.id})}" th:text="${studentDetail.student.name}">山田太郎</a></td>
+    <td th:text="${studentDetail.student.kanaName}">ヤマダタロウ</td>
+    <td th:text="${studentDetail.student.nickname}">タロー</td>
+    <td th:text="${studentDetail.student.email}">taro@example.com</td>
+    <td th:text="${studentDetail.student.area}">東京</td>
+    <td th:text="${studentDetail.student.age}">20</td>
+    <td th:text="${studentDetail.student.sex}">男性</td>
+    <td th:text="${studentDetail.student.remark}">特になし</td>
+    <td>
+      <!-- コースが存在し、少なくとも1件のcourseNameがある場合 -->
+      <ul th:if="${studentDetail.studentsCoursesList != null and !#lists.isEmpty(studentDetail.studentsCoursesList)}">
+        <li th:each="course : ${studentDetail.studentsCoursesList}"
+            th:if="${course.courseName != null and !#strings.isEmpty(course.courseName)}"
+            th:text="|${course.courseName}|">
+          Java入門
+        </li>
+      </ul>
+
+      <!-- コースがnull または 空のリストだった場合は「未受講」 -->
+      <span th:if="${studentDetail.studentsCoursesList == null or #lists.isEmpty(studentDetail.studentsCoursesList)}">
+    未受講     </span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

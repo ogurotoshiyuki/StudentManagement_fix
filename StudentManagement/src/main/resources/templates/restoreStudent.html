@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>受講生情報復活</title>
+  <link th:href="@{/style.css}" rel="stylesheet">
+</head>
+<body>
+<h1>受講生情報の削除復活</h1>
+
+<form th:action="@{/updateStudent}" method="post" th:object="${studentDetail}" id="studentForm">
+  <h2>削除済受講生情報</h2>
+  <table>
+    <input type="hidden" th:field="*{student.id}" />
+    <tr>
+      <th>名前</th>
+      <!-- ひらがな・カタカナ・漢字 -->
+      <td>
+        <input type="text" th:field="*{student.name}" readonly />
+      </td>
+    </tr>
+
+    <tr>
+      <th>カナ名</th>
+      <!-- カタカナだけ -->
+      <td>
+        <input type="text" th:field="*{student.kanaName}" readonly />
+      </td>
+    </tr>
+
+    <tr>
+      <th>ニックネーム</th>
+      <!-- 英数字 -->
+      <td>
+        <input type="text" th:field="*{student.nickname}" readonly />
+      </td>
+    </tr>
+
+    <tr>
+      <th>メールアドレス</th>
+      <td>
+        <input type="email" th:field="*{student.email}" readonly />
+      </td>
+    </tr>
+
+    <tr>
+      <th>地域</th>
+      <!-- 自由入力でもOK -->
+      <td>
+        <input type="text" th:field="*{student.area}" readonly />
+      </td>
+    </tr>
+
+    <tr>
+      <th>年齢</th>
+      <td>
+        <input type="number" th:field="*{student.age}" readonly />
+      </td>
+    </tr>
+
+    <tr>
+      <th>性別</th>
+      <td>
+        <input type="text" th:field="*{student.sex}" readonly />
+      </td>
+    </tr>
+
+    <tr>
+      <th>備考</th>
+      <td>
+        <textarea th:field="*{student.remark}" readonly></textarea>
+      </td>
+    </tr>
+  </table>
+
+  <h2>受講コース</h2>
+  <div th:if="${#fields.hasErrors('studentsCoursesList')}">
+    <p th:errors="*{studentsCoursesList}" style="color: red;"></p>
+  </div>
+
+  <table>
+    <tr th:each="course, iterStat : *{studentsCoursesList}">
+      <td>
+        コース名:
+        <input type="text"
+               th:field="*{studentsCoursesList[__${iterStat.index}__].courseName}"
+               readonly  /><br/>
+
+        開始日:
+        <input type="date"
+               th:field="*{studentsCoursesList[__${iterStat.index}__].courseStartAt}"
+               readonly/><br/>
+
+        終了日:
+        <input type="date"
+               th:field="*{studentsCoursesList[__${iterStat.index}__].courseEndAt}"
+               readonly/>
+      </td>
+    </tr>
+  </table>
+
+  <!-- hidden フィールドを削除ボタン用に -->
+  <input type="hidden" id="isDeleted" name="student.deleted" th:value="false" />
+
+  <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+    <!-- 削除復活ボタン（ に遷移） -->
+    <button type="button" class="btn btn-success"
+            th:onclick="|document.getElementById('isDeleted').value='false';
+             document.getElementById('studentForm').submit();|">
+      削除復活
+    </button>
+    <!-- 最終削除ボタン（DBから完全削除） -->
+    <button type="button" class="btn btn-danger"
+            th:onclick="|if(confirm('本当に完全に削除しますか？')){
+                         location.href='@{/deleteStudent/{id}(id=${studentDetail.student.id})}'
+                       }|">
+      最終削除
+    </button>
+    <!-- 取り消しボタン（studentList に遷移） -->
+    <button type="button"
+            class="btn btn-secondary"
+            th:onclick="|location.href='@{/studentList}'|">
+      取消
+    </button>
+  </div>
+</form>
+</body>
+</html>

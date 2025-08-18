@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>受講生新規登録</title>
+  <link th:href="@{/style.css}" rel="stylesheet">
+</head>
+<body>
+<h1>新規受講生の登録</h1>
+
+<form th:action="@{/registerStudent}" method="post" th:object="${studentDetail}">
+  <h2>受講生情報</h2>
+  <table>
+    <tr>
+      <th>名前</th>
+      <!-- ひらがな・カタカナ・漢字 -->
+      <td>
+        <input type="text" th:field="*{student.name}"
+               pattern="[\u3040-\u30FF\u4E00-\u9FFFー\s]*"
+               title="日本語で入力してください" required />
+      </td>
+    </tr>
+
+    <tr>
+      <th>カナ名</th>
+      <!-- カタカナだけ -->
+      <td>
+        <input type="text" th:field="*{student.kanaName}"
+               pattern="[\u30A0-\u30FFー\s]*"
+               title="全角カタカナで入力してください" required />
+      </td>
+    </tr>
+
+    <tr>
+      <th>ニックネーム</th>
+      <!-- 英数字 -->
+      <td>
+        <input type="text" th:field="*{student.nickname}"
+               pattern="[\u30A0-\u30FFー\s]*"
+               title="全角カタカナで入力してください" required />
+      </td>
+    </tr>
+
+    <tr>
+      <th>メールアドレス</th>
+      <td>
+        <input type="email" th:field="*{student.email}" required />
+      </td>
+    </tr>
+
+    <tr>
+      <th>地域</th>
+      <!-- 自由入力でもOK -->
+      <td>
+        <input type="text" th:field="*{student.area}" maxlength="30" />
+      </td>
+    </tr>
+
+    <tr>
+      <th>年齢</th>
+      <td>
+        <input type="number" th:field="*{student.age}" min="0" max="120" required />
+      </td>
+    </tr>
+
+    <tr>
+      <th>性別</th>
+      <td>
+        <select th:field="*{student.sex}" required>
+          <option value="">-- 選択してください --</option>
+          <option value="男性">男性</option>
+          <option value="女性">女性</option>
+          <option value="他">他</option>
+        </select>
+      </td>
+    </tr>
+
+    <tr>
+      <th>備考</th>
+      <td>
+        <textarea th:field="*{student.remark}" maxlength="255"></textarea>
+      </td>
+    </tr>
+  </table>
+
+  <h2>受講コース</h2>
+<!--  <div th:if="${#fields.hasErrors('studentsCoursesList')}">-->
+<!--    <p th:errors="*{studentsCoursesList}" style="color: red;"></p>-->
+<!--  </div>-->
+
+  <table class="course-table">
+    <thead>
+    <tr>
+      <th>コース名</th>
+      <th>開始日</th>
+      <th>終了日</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="course, iterStat : *{studentsCoursesList}">
+      <!-- コース名 -->
+      <td>
+        <select th:field="*{studentsCoursesList[__${iterStat.index}__].courseId}">
+          <option value="">-- 選択してください --</option>
+          <option th:each="c : ${allCourses}"
+                  th:value="${c.id}"
+                  th:text="${c.courseName}"
+                  th:data-start="${#temporals.format(c.defaultStartAt, 'yyyy-MM-dd')}"
+                  th:data-end="${#temporals.format(c.defaultEndAt, 'yyyy-MM-dd')}">
+          </option>
+<!--          <option th:each="c : ${allCourses}"-->
+<!--                  th:value="${c.id}"-->
+<!--                  th:text="${c.courseName}">-->
+<!--          </option>-->
+        </select>
+      </td>
+
+      <!-- 開始日 -->
+      <td>
+        <input type="date"
+               th:field="*{studentsCoursesList[__${iterStat.index}__].courseStartAt}"
+               th:required="${iterStat.index == 0}" />
+      </td>
+
+      <!-- 終了日 -->
+      <td>
+        <input type="date"
+               th:field="*{studentsCoursesList[__${iterStat.index}__].courseEndAt}"
+               th:required="${iterStat.index == 0}" />
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+
+    <button type="submit">登録</button>
+    <!-- 取り消しボタン（studentList に遷移） -->
+    <button type="button"
+            class="btn btn-secondary"
+            th:onclick="|location.href='@{/studentList}'|">
+      取消
+    </button>
+  </div>
+</form>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const selects = document.querySelectorAll("select");
+
+    // 日付自動入力
+    function fillDateFields(select) {
+      const opt = select.selectedOptions[0];
+      if (!opt) return;
+
+      const row = select.closest("tr");
+      const startInput = row.querySelector("input[name*='courseStartAt']");
+      const endInput   = row.querySelector("input[name*='courseEndAt']");
+
+      if (opt.dataset.start) startInput.value = opt.dataset.start;
+      if (opt.dataset.end)   endInput.value   = opt.dataset.end;
+    }
+
+    // 重複禁止
+    function disableDuplicateOptions() {
+      const chosen = Array.from(selects).map(s => s.value).filter(v => v);
+      selects.forEach(select => {
+        Array.from(select.options).forEach(opt => {
+          opt.disabled = opt.value && chosen.includes(opt.value) && opt.value !== select.value;
+        });
+      });
+    }
+
+    // イベント登録
+    selects.forEach(select => {
+      select.addEventListener("change", () => {
+        fillDateFields(select);
+        disableDuplicateOptions();
+      });
+    });
+
+    // 初期化
+    disableDuplicateOptions();
+  });
+</script>
+</body>
+</html>

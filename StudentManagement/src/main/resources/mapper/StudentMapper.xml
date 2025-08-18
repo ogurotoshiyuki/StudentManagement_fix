@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.repository.StudentRepository">
+
+  <!-- 受講生追加 -->
+  <insert id="insertStudent" parameterType="com.example.model.Student">
+    INSERT INTO student (
+    name, kana_name, nickname, email, area, age, sex, remark
+    ) VALUES (
+    #{name}, #{kanaName}, #{nickname}, #{email},
+    #{area}, #{age}, #{sex}, #{remark}
+    )
+  </insert>
+
+  <!-- 受講コース追加 -->
+  <insert id="insertStudentsCourses" parameterType="com.example.model.StudentsCourses">
+    INSERT INTO students_courses
+    (student_id, course_id, course_start_at, course_end_at)
+    VALUES
+    (#{studentId}, #{courseId}, #{courseStartAt}, #{courseEndAt})
+  </insert>
+
+  <select id="findAllWithStudentAndCourse" resultType="raisetech.StudentManagement.data.StudentsCourses">
+    SELECT sc.*, s.name AS studentName, bc.course_name AS courseName,
+    bc.default_start_at AS defaultStartAt,
+    bc.default_end_at AS defaultEndAt,
+    bc.is_end AS isEnd
+    FROM students_courses sc
+    JOIN students s ON sc.student_id = s.id
+    JOIN basic_courses bc ON sc.course_id = bc.id
+    ORDER BY sc.course_id
+  </select>
+
+</mapper>
