@@ -61,40 +61,6 @@ public class StudentController {
   }
 
   // 受講生のコース一覧表示（HTML出力）
-//  @GetMapping("/studentsCoursesList")
-//  public String getStudentsCoursesList(Model model) {
-//    List<StudentsCourses> list = service.searchStudentsCoursesList();
-//    if (list == null) list = new ArrayList<>();
-//
-//    // コースごとにまとめる Map
-//    Map<Integer, BasicCourse> courseMap = new LinkedHashMap<>();
-//
-//    for (StudentsCourses sc : list) {
-//      // courseMap に無ければ作成
-//      BasicCourse course = courseMap.get(sc.getCourseId());
-//      if (course == null) {
-//        course = new BasicCourse();
-//        course.setId(sc.getCourseId());
-//        course.setCourseName(sc.getCourseName());
-//        course.setIsEnd(sc.getIsEnd());
-//        course.setStudentsCourses(new ArrayList<>()); // ここで空リスト初期化
-//        courseMap.put(sc.getCourseId(), course);
-//      }
-//      course.getStudentsCourses().add(sc);
-//    }
-//
-//    // null が絶対に入らないリストを作る
-//    List<BasicCourse> coursesList = courseMap.values().stream()
-//        .filter(Objects::nonNull)
-//        .collect(Collectors.toList());
-//    System.out.println("coursesList size: " + coursesList.size());
-//    for (BasicCourse bc : coursesList) {
-//      if (bc == null) System.out.println("null course detected!");
-//      else System.out.println("*****courseId=" + bc.getId() + ", studentsCourses=" + bc.getStudentsCourses());
-//    }
-//    model.addAttribute("coursesList", coursesList);
-//    return "studentsCoursesList";
-//  }
   @GetMapping(value = "/studentsCoursesList", produces = "application/json; charset=UTF-8")
   public String getStudentsCoursesList(Model model) {
     List<StudentsCourses> list = service.searchStudentsCoursesList();
@@ -102,9 +68,9 @@ public class StudentController {
     // 基本コースID順にソート
     list.sort(Comparator.comparing(StudentsCourses::getCourseId));
     // 終了フラグを確認（スナップ出力）
-    for (StudentsCourses sc : list) {
-      System.out.println("コースID=" + sc.getCourseId() + " 終了済=" + sc.getIsEnd());
-    }
+//    for (StudentsCourses sc : list) {
+//      System.out.println("コースID=" + sc.getCourseId() + " 終了済=" + sc.getIsEnd());
+//    }
     model.addAttribute("coursesList", list);
     return "studentsCoursesList";
   }
@@ -168,7 +134,6 @@ public class StudentController {
     return "redirect:/studentList";
   }
 
-
   // 削除受講生の一覧表示
   @GetMapping("/deletedStudentList")
   public String getDeletedStudentList(Model model) {
@@ -183,8 +148,9 @@ public class StudentController {
   public String restoretStudent(@PathVariable("id") Long id, Model model) {
     Student student = service.findStudentById(id);
     List<StudentsCourses> courses = service.findCoursesByStudentId(id);
-    System.out.println("student = " + student);
-    System.out.println("courses = " + courses);
+    //スナップ
+//    System.out.println("student = " + student);
+//    System.out.println("courses = " + courses);
     // 目的に合ったコンストラクタで生成
     StudentDetail detail = new StudentDetail(student, courses);
     model.addAttribute("studentDetail", detail);
@@ -274,7 +240,6 @@ public class StudentController {
       course.setStudentId(student.getId());
       service.insertStudentsCourses(course);
     }
-
     return "redirect:/studentList";
   }
   // 受講生の完全削除
