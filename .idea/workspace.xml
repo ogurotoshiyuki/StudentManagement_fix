@@ -46,12 +46,12 @@
     &quot;assignee&quot;: &quot;ogurotoshiyuki&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/ogurotoshiyuki/StudentManagement-0815.git&quot;,
-    &quot;accountId&quot;: &quot;2e68aa89-e8b9-4cc6-9765-983bfa2a1d0a&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ogurotoshiyuki/StudentManagement_fix.git",
+    "accountId": "2e68aa89-e8b9-4cc6-9765-983bfa2a1d0a"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -116,7 +116,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755648268058</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="最終">
+      <option name="closed" value="true" />
+      <created>1755649324384</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1755649324384</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
