@@ -137,11 +137,14 @@ tr:hover {
   margin-bottom: 20px;
 }
 .container {
-       display: flex;
-       justify-content: center; /* 水平方向の中央揃え */
-       align-items: center;     /* 垂直方向の中央揃え */
-       width: 1197px;
-       height: 420px;
+    display: flex;           /* 横並び */
+    flex-wrap: wrap;         /* 画面幅が狭いと折り返す */
+    gap: 20px;               /* メニュー間の間隔 */
+    width: 100%;             /* 画面幅いっぱい */
+    max-width: 800px;        /* 最大幅 */
+    margin: 0 auto;          /* 中央配置 */
+    padding: 10px;           /* 内側余白 */
+    box-sizing: border-box;  /* padding込みで幅計算 */
 }
 .banner {
        width: 1197px;
@@ -198,4 +201,21 @@ tr:hover {
 .course-table input[type="date"] {
     width: 100%;
     box-sizing: border-box; /* 枠からはみ出さないようにする */
+}
+.menu-box {
+    flex: 1 1 250px;         /* 最小250px、余った幅で伸縮 */
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    box-sizing: border-box;
+}
+
+.menu-box ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.menu-box li {
+    margin: 5px 0;
 }
