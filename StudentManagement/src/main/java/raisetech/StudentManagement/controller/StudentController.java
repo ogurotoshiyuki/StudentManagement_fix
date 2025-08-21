@@ -56,7 +56,20 @@ public class StudentController {
     List<Student> students = service.searchStudentList();
     List<StudentsCourses> studentsCourses = service.searchStudentsCoursesList();
 
-    model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
+    List<StudentDetail> studentDetails = converter.convertStudentDetails(students, studentsCourses)
+        .stream()
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
+
+    model.addAttribute("studentList", studentDetails);
+
+    // 追加: コース一覧も渡す
+    List<StudentsCourses> list = service.searchStudentsCoursesList();
+    model.addAttribute("coursesList", list);
+    // 終了フラグを確認（スナップ出力）
+    for (StudentsCourses sc : list) {
+      System.out.println("コースID=" + sc.getCourseId() + " 終了済=" + sc.getIsEnd());
+    }
     return "studentList"; // ← HTMLテンプレート名（拡張子不要）
   }
 
@@ -103,8 +116,8 @@ public class StudentController {
     // 学生情報更新（isDeletedも含む）
     service.updateStudent(studentDetail.getStudent());
 
-    // コース情報一度レコード削除して再登録
-    service.deleteCoursesByStudentId(studentDetail.getStudent().getId());
+    // コース情報一度レコード削除(除く終了コース)して再登録
+    service.deleteActiveCoursesByStudentId(studentDetail.getStudent().getId());
 
     List<StudentsCourses> courses = studentDetail.getStudentsCoursesList();
     if (courses != null) {

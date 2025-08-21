@@ -85,6 +85,15 @@ public interface StudentRepository {
       """)
     void updateStudent(Student student);
 
+    @Delete("""
+  DELETE FROM students_courses
+  WHERE student_id = #{studentId}
+    AND course_id IN (
+      SELECT id FROM basic_courses WHERE is_end IS NULL
+    )
+""")
+    void deleteActiveCoursesByStudentId(Integer studentId);
+
     @Delete("DELETE FROM students WHERE id = #{studentId}")
     void deleteStudentsByStudentId(Integer studentId);
 

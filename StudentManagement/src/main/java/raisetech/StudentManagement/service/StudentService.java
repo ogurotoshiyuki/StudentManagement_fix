@@ -65,6 +65,10 @@ public class StudentService {
   public void deleteCoursesByStudentId(Integer studentId) {
     repository.deleteCoursesByStudentId(studentId);
   }
+
+  public void deleteActiveCoursesByStudentId(Integer studentId) {
+    repository.deleteActiveCoursesByStudentId(studentId);
+  }
 }
 
 

@@ -7,8 +7,11 @@
     <list default="true" id="cd2c634e-d5d0-4ebf-89c5-48d4ff0f711e" name="変更" comment="最終">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudentManagement/src/main/java/raisetech/StudentManagement/controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/StudentManagement/src/main/java/raisetech/StudentManagement/controller/StudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StudentManagement/src/main/resources/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/StudentManagement/src/main/resources/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StudentManagement/src/main/resources/templates/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/StudentManagement/src/main/resources/templates/menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StudentManagement/src/main/java/raisetech/StudentManagement/repository/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/StudentManagement/src/main/java/raisetech/StudentManagement/repository/StudentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StudentManagement/src/main/java/raisetech/StudentManagement/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/StudentManagement/src/main/java/raisetech/StudentManagement/service/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StudentManagement/src/main/resources/templates/deletedStudentList.html" beforeDir="false" afterPath="$PROJECT_DIR$/StudentManagement/src/main/resources/templates/deletedStudentList.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StudentManagement/src/main/resources/templates/studentList.html" beforeDir="false" afterPath="$PROJECT_DIR$/StudentManagement/src/main/resources/templates/studentList.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StudentManagement/src/main/resources/templates/studentsCoursesList.html" beforeDir="false" afterPath="$PROJECT_DIR$/StudentManagement/src/main/resources/templates/studentsCoursesList.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,12 +140,32 @@
       <option name="project" value="LOCAL" />
       <updated>1755653102872</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="最終">
+      <option name="closed" value="true" />
+      <created>1755659493695</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1755659493695</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="ほぼ最終" />
     <MESSAGE value="最終" />
     <option name="LAST_COMMIT_MESSAGE" value="最終" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="NONE" type="java-line">
+          <url>file://$PROJECT_DIR$/StudentManagement/src/main/java/raisetech/StudentManagement/repository/StudentRepository.java</url>
+          <line>19</line>
+          <log-expression expression="    @Select(&quot;&quot;&quot;&#10;    SELECT sc.*, s.name AS student_name, bc.course_name,bc.is_end&#10;    FROM students_courses sc&#10;    JOIN students s ON sc.student_id = s.id&#10;    JOIN basic_courses bc ON sc.course_id = bc.id&#10;&quot;&quot;&quot;)&#10;    @Results({&#10;        @Result(property = &quot;id&quot;, column = &quot;id&quot;),&#10;        @Result(property = &quot;studentId&quot;, column = &quot;student_id&quot;),&#10;        @Result(property = &quot;courseId&quot;, column = &quot;course_id&quot;),&#10;        @Result(property = &quot;studentName&quot;, column = &quot;student_name&quot;),&#10;        @Result(property = &quot;courseName&quot;, column = &quot;course_name&quot;),&#10;        @Result(property = &quot;isEnd&quot;, column = &quot;is_end&quot;),  // ← 追加&#10;        @Result(property = &quot;courseStartAt&quot;, column = &quot;course_start_at&quot;),&#10;        @Result(property = &quot;courseEndAt&quot;, column = &quot;course_end_at&quot;)&#10;    })&#10;    List&lt;StudentsCourses&gt; searchStudentsCourses();" language="JAVA" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -43,13 +43,20 @@
       <td th:text="${studentDetail.student.sex}">男性</td>
       <td th:text="${studentDetail.student.remark}">特になし</td>
       <td>
+        <!-- コースが存在し、少なくとも1件のcourseNameがある場合 -->
         <ul th:if="${studentDetail.studentsCoursesList != null and !#lists.isEmpty(studentDetail.studentsCoursesList)}">
           <li th:each="course : ${studentDetail.studentsCoursesList}"
-              th:if="${course.courseName != null and !#strings.isEmpty(course.courseName)}"
-              th:text="${course.courseName}">Java入門</li>
+              th:if="${course.courseName != null and !#strings.isEmpty(course.courseName)}">
+            <!-- コース名 -->
+            <span th:text="${course.courseName}">Java入門</span>
+            <!-- ステータス（終了 or 継続中） -->
+            <span th:text="${course.isEnd != null and course.isEnd == '1' ? '(終了)' : '(開催中)'}"></span>
+          </li>
         </ul>
+
+        <!-- コースがnull または 空のリストだった場合は「未受講」 -->
         <span th:if="${studentDetail.studentsCoursesList == null or #lists.isEmpty(studentDetail.studentsCoursesList)}">
-        未受講
+    未受講
       </span>
       </td>
     </tr>
